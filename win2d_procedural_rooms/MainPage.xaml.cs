@@ -25,8 +25,17 @@ namespace win2d_procedural_rooms
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        int nMaxRooms = 100;
+        int nMaxRooms = 50;
         List<Room> Rooms = new List<Room>();
+
+        enum GAMESTATE
+        {
+            ADDING_ROOMS,
+            SEPARATING_ROOMS,
+            DONE
+        }
+
+        GAMESTATE State = GAMESTATE.ADDING_ROOMS;
 
         public MainPage()
         {
@@ -53,9 +62,22 @@ namespace win2d_procedural_rooms
 
         private void canvasMain_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
         {
-            if(Rooms.Count < nMaxRooms)
+            switch(State)
             {
-                Rooms.Add(Room.CreateRandomRoom());
+                case GAMESTATE.ADDING_ROOMS:
+                    if (Rooms.Count < nMaxRooms)
+                    {
+                        Rooms.Add(Room.CreateRandomRoom());
+                    }
+                    else
+                    {
+                        State = GAMESTATE.SEPARATING_ROOMS;
+                    }
+                    break;
+                case GAMESTATE.SEPARATING_ROOMS:
+                    break;
+                case GAMESTATE.DONE:
+                    break;
             }
         }
 
@@ -66,6 +88,8 @@ namespace win2d_procedural_rooms
 
         async Task CreateResourcesAsync(CanvasAnimatedControl sender)
         {
+            Statics.CenterScreenX = (int)sender.Size.Width / 2;
+            Statics.CenterScreenY = (int)sender.Size.Height / 2;
         }
 
 

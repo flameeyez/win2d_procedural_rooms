@@ -10,18 +10,20 @@ namespace win2d_procedural_rooms
 {
     public static class Statics
     {
-        public static int PixelScale = 5;
+        public static int PixelScale = 10;
 
         public static Random Random = new Random(DateTime.Now.Millisecond);
 
-        public static int CircleRadius = 200;
+        public static int CircleRadius = 100;
+        public static int CenterScreenX { get; set; }
+        public static int CenterScreenY { get; set; }
         public static Vector2 RandomPointInCircle()
         {
             double t = 2 * Math.PI * Random.NextDouble();
             double u = Random.NextDouble() + Random.NextDouble();
             double r = u > 1 ? 2 - u : u;
 
-            return new Vector2((float)(CircleRadius * r * Math.Cos(t)), (float)(CircleRadius * r * Math.Sin(t)));
+            return new Vector2((float)(Statics.CenterScreenX - CircleRadius * r * Math.Cos(t)), (float)(Statics.CenterScreenY - CircleRadius * r * Math.Sin(t)));
         }
 
         public static Color RandomColor()

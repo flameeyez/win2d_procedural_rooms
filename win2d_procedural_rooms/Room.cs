@@ -19,7 +19,7 @@ namespace win2d_procedural_rooms
 
         public void Draw(CanvasAnimatedDrawEventArgs args)
         {
-            args.DrawingSession.FillRectangle(new Rect(Position.X, Position.Y, Width, Height), Color);
+            args.DrawingSession.FillRectangle(new Rect(Position.X, Position.Y, Width * Statics.PixelScale, Height * Statics.PixelScale), Color);
         }
 
         public static Room CreateRandomRoom()
